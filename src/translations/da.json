@@ -1,0 +1,77 @@
+{
+  "entity": {
+    "sensor": {
+      "state": {
+        "idle": "Inaktiv",
+        "printing": "Udskriver",
+        "paused": "Pauset",
+        "complete": "Fuldført",
+        "offline": "Offline",
+        "unknown": "Ukendt",
+        "running": "Kører",
+        "finish": "Afsluttet"
+      }
+    }
+  },
+  "ui": {
+    "card": {
+      "printwatch": {
+        "not_printing": "Udskriver ikke i øjeblikket",
+        "last_print": "Sidste udskrift: {name}",
+        "printer_offline": "Printer offline",
+        "camera_unavailable": "Kamera ikke tilgængeligt",
+        "time": {
+          "complete": "Fuldført",
+          "left": "Tilbage",
+          "hours": "t",
+          "minutes": "m"
+        },
+        "print": {
+          "layer": "Lag",
+          "progress": "Fremskridt",
+          "weight": "Vægt",
+          "length": "Længde"
+        },
+        "temperatures": {
+          "bed": "Printplade",
+          "nozzle": "Dyse",
+          "speed": "Hastighed",
+          "bed_target": "Indstil pladetemperatur",
+          "nozzle_target": "Indstil dysetemperatur",
+          "speed_profile": "Indstil printhastighed",
+          "range": "Område: {min}°C - {max}°C"
+        },
+        "controls": {
+          "pause": "Pause",
+          "resume": "Genoptag",
+          "stop": "Stop",
+          "cancel": "Annuller",
+          "save": "Gem"
+        },
+        "speed_profiles": {
+          "silent": "Støjsvag",
+          "standard": "Standard",
+          "sport": "Sport",
+          "ludicrous": "Ekstrem"
+        },
+        "dialogs": {
+          "pause": {
+            "title": "Bekræft pause",
+            "message": "Er du sikker på, at du vil pause udskriften? Dette kan påvirke kvaliteten.",
+            "confirm": "Bekræft"
+          },
+          "stop": {
+            "title": "Bekræft stop",
+            "message": "Er du sikker på, at du vil stoppe udskriften? Denne handling kan ikke fortrydes.",
+            "confirm": "Stop udskrift"
+          }
+        },
+        "materials": {
+          "empty": "Tom",
+          "unknown": "Ukendt",
+          "external_spool": "Ekstern spole"
+        }
+      }
+    }
+  }
+}
