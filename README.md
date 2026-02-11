@@ -88,7 +88,7 @@ ams_slot2_entity: sensor.p1s_ams_tray_2
 ams_slot3_entity: sensor.p1s_ams_tray_3
 ams_slot4_entity: sensor.p1s_ams_tray_4
 ams_slot5_entity: sensor.p1s_ams_tray_5
-...
+online_entity: binary_sensor.p1s_online
 camera_entity: image.p1s_camera
 cover_image_entity: image.p1s_cover_image
 pause_button_entity: button.p1s_pause_printing
