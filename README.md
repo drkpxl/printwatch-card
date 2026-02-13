@@ -135,7 +135,7 @@ Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md)
 
 If you're having issues, please:
 1. Check the Troubleshooting section above
-2. Search existing [GitHub issues](https://github.com/yourusername/printwatch-card/issues)
+2. Search existing [GitHub issues](https://github.com/drkpxl/printwatch-card/issues)
 3. Create a new issue if your problem isn't already reported
 
 ## License
