@@ -13,7 +13,7 @@ const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 
 const timestamp = new Date().getTime();
 
 export default {
-  input: 'src/index.js',
+  input: 'src/main.js',
   output: {
     file: 'dist/printwatch-card.js',
     format: 'es',

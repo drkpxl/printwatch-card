@@ -1,0 +1,145 @@
+{
+  "entity": {
+    "sensor": {
+      "state": {
+        "idle": "Ожидание",
+        "printing": "Печать",
+        "prepare": "Подготовка",
+        "paused": "Пауза",
+        "complete": "Завершено",
+        "offline": "Не в сети",
+        "failed": "Ошибка",
+        "unknown": "Неизвестно",
+        "running": "В процессе",
+        "finish": "Завершено",
+        "filament_loading": "Загрузка филамента",
+        "homing_toolhead": "Возврат головки в исходное положение",
+        "heatbed_preheating": "Подогрев стола",
+        "calibrating_extrusion": "Калибровка экструзии",
+        "sweeping_xy_mech_mode": "Калибровка осей XY",
+        "cleaning_nozzle_tip": "Очистка сопла",
+        "auto_bed_leveling": "Калибровка стола"
+      }
+    }
+  },
+  "ui": {
+    "card": {
+      "printwatch": {
+        "not_printing": "Печать не выполняется",
+        "last_print": "Последняя печать: {name}",
+        "printer_offline": "Принтер не в сети",
+        "camera_unavailable": "Камера недоступна",
+        "time": {
+          "complete": "Готово",
+          "left": "Осталось",
+          "hours": "ч",
+          "minutes": "м"
+        },
+        "print": {
+          "layer": "Слой",
+          "progress": "Прогресс",
+          "weight": "Вес",
+          "length": "Длина"
+        },
+        "temperatures": {
+          "bed": "Стол",
+          "nozzle": "Сопло",
+          "speed": "Скорость",
+          "bed_target": "Установить температуру стола",
+          "nozzle_target": "Установить температуру сопла",
+          "speed_profile": "Установить скорость печати",
+          "range": "Диапазон: {min}°C – {max}°C"
+        },
+        "controls": {
+          "pause": "Пауза",
+          "resume": "Продолжить",
+          "stop": "Остановить",
+          "cancel": "Отмена",
+          "save": "Сохранить"
+        },
+        "speed_profiles": {
+          "silent": "Тихо",
+          "standard": "Стандарт",
+          "sport": "Спорт",
+          "ludicrous": "Турбо",
+          "unavailable": "Недоступно"
+        },
+        "dialogs": {
+          "pause": {
+            "title": "Подтверждение паузы",
+            "message": "Вы уверены, что хотите поставить текущую печать на паузу? Это может повлиять на качество изделия.",
+            "confirm": "Подтвердить"
+          },
+          "stop": {
+            "title": "Подтверждение остановки",
+            "message": "Вы уверены, что хотите остановить текущую печать? Это действие невозможно отменить.",
+            "confirm": "Остановить печать"
+          }
+        },
+        "materials": {
+          "empty": "Пусто",
+          "unknown": "Неизвестно",
+          "external_spool": "Внешняя катушка",
+          "temperature": "Температура",
+          "humidity": "Влажность"
+        }
+      },
+      "printwatch_editor": {
+        "general": {
+          "label": "Общие настройки",
+          "title": "Название", 
+          "status": "Статус принтера",
+          "stage": "Этап печати",
+          "progress": "Прогресс печати",
+          "remaining_time": "Оставшееся время",
+          "speed_profile": "Профиль скорости печати"
+        },
+        "camera": {
+          "label": "Настройки камеры",
+          "entity": "Камера",
+          "refresh_rate": "Частота обновления",
+          "hint": {
+              "entity": "Используется для отображения в реальном времени",
+              "refresh_rate" : "Интервал обновления изображения камеры в скекундах"
+          }
+        },
+        "control": {
+          "label": "Управление печатью",
+          "resume": "Кнопка продолжения",
+          "pause": "Кнопка паузы",
+          "stop": "Кнопка остановки"
+        },
+        "layers": {
+          "label": "Слои",
+          "current_layer": "Текущий слой",
+          "total_layers": "Всего слоев"
+        },
+        "model": {
+          "label": "Модель",
+          "name": "Название",
+          "preview": "Предпросмотр",
+          "length": "Длина",
+          "weight": "Вес"
+        },
+        "temperature": {
+          "label": "Температура",
+          "bed": "Стол",
+          "bed_number": "Управление столом",
+          "nozzle": "Сопло",
+          "nozzle_number": "Управление соплом"
+        },
+        "filament": {
+          "label": "Филамент",
+          "spools": "Катушки",
+          "temperature": "Температура AMS",
+          "humidity": "Влажность AMS"
+        },
+        "additional": {
+          "label": "Дополнительно",
+          "chamber_light": "Освещение камеры",
+          "fan": "Вентилятор охлаждения"
+        }
+      }
+    }
+  }
+}

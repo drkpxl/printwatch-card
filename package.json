@@ -1,6 +1,6 @@
 {
   "name": "printwatch-card",
-  "version": "1.2.0",
+  "version": "1.4.2",
   "description": "A Home Assistant card for 3D printers",
   "type": "module",
   "main": "dist/printwatch-card.js",
@@ -20,8 +20,8 @@
   "author": "Steven Hubert",
   "license": "MIT",
   "dependencies": {
-    "lit": "^2.8.0",
     "@lit/reactive-element": "^2.0.0",
+    "lit": "^2.8.0",
     "lit-html": "^3.0.0"
   },
   "devDependencies": {

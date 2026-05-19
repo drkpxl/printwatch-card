@@ -12,55 +12,32 @@ const PRINTING_PROCESS_STATES = [
 ];
 
 export const isPrinting = (hass, config) => {
-  const currentStage = hass.states[config.current_stage_entity]?.state;
-  const printStatus = hass.states[config.print_status_entity]?.state;
+  const currentStage = hass.states[config.stage]?.state;
+  const printStatus = hass.states[config.status]?.state;
   
   if (PRINTING_STATES.includes(printStatus)) return true;
   if (NON_PRINTING_STATES.includes(currentStage)) return false;
-  if (currentStage === 'printing' || currentStage.startsWith('paused_')) return true;
+  if (currentStage === 'printing' || (typeof currentStage === 'string' && currentStage.startsWith('paused_'))) return true;
   
   return PRINTING_PROCESS_STATES.includes(currentStage);
 };
 
 export const isPaused = (hass, config) => 
-  hass.states[config.print_status_entity]?.state === 'pause';
+  hass.states[config.status]?.state === 'pause';
 
 export const getAmsSlots = (hass, config) => {
-  // First, check for explicit external spool configuration
-  const externalSpoolEntity = config.external_spool_entity;
-  
-  // Check if any AMS slot entities are defined and not null
-  const amsSlotEntities = [
-    config.ams_slot1_entity,
-    config.ams_slot2_entity,
-    config.ams_slot3_entity,
-    config.ams_slot4_entity,
-    config.ams_slot5_entity,
-    config.ams_slot6_entity,
-    config.ams_slot7_entity,
-    config.ams_slot8_entity,
-    config.ams_slot9_entity,
-    config.ams_slot10_entity,
-    config.ams_slot11_entity,
-    config.ams_slot12_entity,
-    config.ams_slot13_entity,
-    config.ams_slot14_entity,
-    config.ams_slot15_entity,
-    config.ams_slot16_entity
-  ].filter(entity => entity != null && entity.trim() !== '');
-
-  // If external spool is defined and has a valid state, use it
-  if (externalSpoolEntity) {
-    const externalSpool = hass.states[externalSpoolEntity];
-    if (externalSpool?.state && externalSpool.state !== 'unknown') {
-      return [{
-        type: externalSpool.state || 'External Spool',
-        color: externalSpool.attributes?.color || '#E0E0E0',
-        empty: false,
-        name: externalSpool.attributes?.name || 'External Spool',
-        active: true
-      }];
-    }
+  // Build list of AMS slot entity ids. Only accept `config.ams_slots` array.
+  // Each item may be a string entity id or an object like { entity: 'sensor.x' }.
+  let amsSlotEntities = [];
+  if (Array.isArray(config?.ams_slots)) {
+    amsSlotEntities = config.ams_slots
+      .map(item => {
+        if (!item && item !== 0) return null;
+        if (typeof item === 'string') return item.trim();
+        if (typeof item === 'object' && item.entity) return String(item.entity).trim();
+        return null;
+      })
+      .filter(e => e && e !== '');
   }
 
   // If no AMS slot entities are defined, return empty array
@@ -70,16 +47,17 @@ export const getAmsSlots = (hass, config) => {
 
   // Process AMS slots if they exist
   const processedSlots = amsSlotEntities
-    .map(entity => {
-      const state = hass.states[entity];
+    .map(entityId => {
+      const state = hass.states[entityId];
       if (!state) return null;
-      
+
       return {
         type: state.state || 'Empty',
         color: state.attributes?.color || '#E0E0E0',
-        empty: state.attributes?.empty || false,
-        active: state.attributes?.active || false,
-        name: state.attributes?.name || 'Unknown'
+        empty: !!state.attributes?.empty,
+        active: !!state.attributes?.active,
+        name: state.attributes?.name || state.attributes?.friendly_name || 'Unknown',
+        entity: entityId
       };
     })
     .filter(Boolean);
@@ -88,8 +66,8 @@ export const getAmsSlots = (hass, config) => {
 };
 
 const getLastPrintName = (hass, config) => {
-  const printStatus = hass.states[config.print_status_entity]?.state;
-  const taskName = hass.states[config.task_name_entity]?.state;
+  const printStatus = hass.states[config.status]?.state;
+  const taskName = hass.states[config.model.name]?.state;
   
   return ['idle', 'finish'].includes(printStatus) && 
          taskName && 
@@ -98,36 +76,77 @@ const getLastPrintName = (hass, config) => {
     : null;
 };
 
+export const showElement = (hass, config) => {
+  const getState = (configValue, defaultValue = true) => {
+    if (configValue === undefined || configValue === null) return defaultValue;
+    const norm = String(configValue).trim().toLowerCase();
+    if (norm === '' || norm === 'null' || norm === 'undefined') return defaultValue;
+    return ['true', '1', 'yes'].includes(norm);
+  };
+
+  // Guard access to config.show (may be undefined)
+  const show = config?.show || {};
+
+  return {
+    title: getState(show.title),
+    camera: getState(show.camera),
+    control: getState(show.control),
+    ams_slots: getState(show.ams_slots)
+  };
+}
+
 export const getEntityStates = (hass, config) => {
   const getState = (entity, defaultValue = '0') => 
     hass.states[entity]?.state || defaultValue;
 
+  // Guard access
+  const control = config?.control || {};
+  const camera = config?.camera || {};
+  const layers = config?.layers || {};
+  const temperature = config?.temperature || {};
+  const ams = config?.ams || {};
+  const model = config?.model || {};
+
   return {
-    name: config.printer_name || 'Unnamed Printer',
-    status: getState(config.print_status_entity, 'idle'),
-    currentStage: getState(config.current_stage_entity, 'unknown'),
-    taskName: getState(config.task_name_entity, 'No active print'),
-    progress: parseFloat(getState(config.progress_entity)),
-    currentLayer: parseInt(getState(config.current_layer_entity)),
-    totalLayers: parseInt(getState(config.total_layers_entity)),
-    remainingTime: parseInt(getState(config.remaining_time_entity)),
-    bedTemp: parseFloat(getState(config.bed_temp_entity)),
-    nozzleTemp: parseFloat(getState(config.nozzle_temp_entity)),
-    speedProfile: getState(config.speed_profile_entity, 'standard'),
+    name: config.title || 'Unnamed Printer',
+
+    status: getState(config.status, 'idle'),
+    currentStage: getState(config.stage, 'unknown'),
+
+    progress: parseFloat(getState(config.progress)),
+    remainingTime: parseInt(parseFloat(getState(config.remaining_time)) * 60),
+
+    speedProfile: getState(config.speed_profile, 'standard'),
+    speed_profile: config.speed_profile,
+
     isPrinting: isPrinting(hass, config),
     isPaused: isPaused(hass, config),
-    lastPrintName: getLastPrintName(hass, config),
-    // Pass through the entity IDs needed for service calls
-    bed_temp_entity: config.bed_temp_entity,
-    nozzle_temp_entity: config.nozzle_temp_entity,
-    bed_target_temp_entity: config.bed_target_temp_entity,
-    nozzle_target_temp_entity: config.nozzle_target_temp_entity,
-    speed_profile_entity: config.speed_profile_entity,
-    chamber_light_entity: config.chamber_light_entity,
-    aux_fan_entity: config.aux_fan_entity && hass.states[config.aux_fan_entity] ? config.aux_fan_entity : null,
-    camera_entity: config.camera_entity,
-    cover_image_entity: config.cover_image_entity,
-    print_weight_entity: parseInt(getState(config.print_weight_entity)),
-    print_length_entity: parseInt(getState(config.print_length_entity))
+
+    resume_button: control.resume_button,
+    pause_button: control.pause_button,
+    stop_button: control.stop_button,
+    chamber_light_entity: control.chamber_light,
+    aux_fan_entity: control.fan && hass.states[control.fan] ? control.fan : null,
+
+    camera_entity: camera.entity,
+
+    currentLayer: parseInt(getState(layers.current_layer)),
+    totalLayers: parseInt(getState(layers.total_layers)),
+
+    bed_temp_entity: temperature.bed,
+    nozzle_temp_entity: temperature.nozzle,
+    bed_target_temp_entity: temperature.bed_number,
+    nozzle_target_temp_entity: temperature.nozzle_number,
+    bed_temp: parseFloat(getState(temperature.bed)),
+    nozzle_temp: parseFloat(getState(temperature.nozzle)),
+
+    ams_temp: parseFloat(getState(ams.temperature)),
+    ams_humidity: parseFloat(getState(ams.humidity)),
+
+    cover_image_entity: model.preview,
+    print_weight_entity: parseInt(getState(model.weight)),
+    print_length_entity: parseInt(getState(model.length)),
+    taskName: getState(model.name, 'No active print'),
+    lastPrintName: getLastPrintName(hass, config)
   };
 };

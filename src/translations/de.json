@@ -2,28 +2,38 @@
   "entity": {
     "sensor": {
       "state": {
-        "idle": "Bereit",
+        "idle": "Inaktiv",
         "printing": "Druckt",
+        "prepare": "Vorbereitung",
         "paused": "Pausiert",
-        "complete": "Fertig",
+        "complete": "Abgeschlossen",
         "offline": "Offline",
+        "failed": "Fehlgeschlagen",
         "unknown": "Unbekannt",
-        "running": "Läuft"
+        "running": "Läuft",
+        "finish": "Beendet",
+        "filament_loading": "Filament wird geladen",
+        "homing_toolhead": "Fahrkopf wird kalibriert",
+        "heatbed_preheating": "Druckbett wird vorgeheizt",
+        "calibrating_extrusion": "Kalibrierung der Extrusion",
+        "sweeping_xy_mech_mode": "Kalibrierung der XY-Achsen",
+        "cleaning_nozzle_tip": "Reinigung der Düse",
+        "auto_bed_leveling": "TTischkalibration"
       }
     }
   },
   "ui": {
     "card": {
       "printwatch": {
-        "not_printing": "Aktuell wird nicht gedruckt",
+        "not_printing": "Derzeit kein Druckvorgang",
         "last_print": "Letzter Druck: {name}",
         "printer_offline": "Drucker offline",
         "camera_unavailable": "Kamera nicht verfügbar",
         "time": {
           "complete": "Fertig",
           "left": "Verbleibend",
-          "hours": "Std",
-          "minutes": "Min"
+          "hours": "h",
+          "minutes": "m"
         },
         "print": {
           "layer": "Schicht",
@@ -32,15 +42,27 @@
           "length": "Länge"
         },
         "temperatures": {
-          "bed": "Bett",
+          "bed": "Druckbett",
           "nozzle": "Düse",
-          "speed": "Geschwindigkeit"
+          "speed": "Geschwindigkeit",
+          "bed_target": "Druckbetttemperatur einstellen",
+          "nozzle_target": "Düsentemperatur einstellen",
+          "speed_profile": "Druckgeschwindigkeit einstellen",
+          "range": "Bereich: {min}°C – {max}°C"
         },
         "controls": {
           "pause": "Pause",
           "resume": "Fortsetzen",
-          "stop": "Stopp",
-          "cancel": "Abbrechen"
+          "stop": "Stoppen",
+          "cancel": "Abbrechen",
+          "save": "Speichern"
+        },
+        "speed_profiles": {
+          "silent": "Leise",
+          "standard": "Standard",
+          "sport": "Sport",
+          "ludicrous": "Extrem",
+          "unavailable": "Nicht verfügbar"
         },
         "dialogs": {
           "pause": {
@@ -57,7 +79,65 @@
         "materials": {
           "empty": "Leer",
           "unknown": "Unbekannt",
-          "external_spool": "Externe Spule"
+          "external_spool": "Externe Spule",
+          "temperature": "Temperatur",
+          "humidity": "Feuchtigkeit"
+        }
+      },
+      "printwatch_editor": {
+        "general": {
+          "label": "Allgemeine Einstellungen",
+          "title": "Titel",
+          "status": "Druckerstatus",
+          "stage": "Druckphase",
+          "progress": "Druckfortschritt",
+          "remaining_time": "Verbleibende Zeit",
+          "speed_profile": "Druckgeschwindigkeitsprofil"
+        },
+        "camera": {
+          "label": "Kameraeinstellungen",
+          "entity": "Kamera",
+          "refresh_rate": "Aktualisierungsintervall",
+          "hint": {
+            "entity": "Wird für die Live-Kameraanzeige verwendet",
+            "refresh_rate": "Aktualisierungsintervall des Kamerabildes in Sekunden"
+          }
+        },
+        "control": {
+          "label": "Drucksteuerung",
+          "resume": "Fortsetzen-Taste",
+          "pause": "Pause-Taste",
+          "stop": "Stopp-Taste"
+        },
+        "layers": {
+          "label": "Schichten",
+          "current_layer": "Aktuelle Schicht",
+          "total_layers": "Gesamtanzahl der Schichten"
+        },
+        "model": {
+          "label": "Modell",
+          "name": "Name",
+          "preview": "Vorschau",
+          "length": "Länge",
+          "weight": "Gewicht"
+        },
+        "temperature": {
+          "label": "Temperatur",
+          "bed": "Druckbett",
+          "bed_number": "Druckbettsteuerung",
+          "nozzle": "Düse",
+          "nozzle_number": "Düsensteuerung"
+        },
+        "filament": {
+          "label": "Filament",
+          "spools": "Spulen",
+          "temperature": "Temperatur AMS",
+          "humidity": "Feuchtigkeit AMS"
+        },
+        "additional": {
+          "label": "Weitere Einstellungen",
+          "chamber_light": "Bauraumbeleuchtung",
+          "fan": "Kühlventilator"
         }
       }
     }

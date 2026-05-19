@@ -68,7 +68,7 @@ export const temperatureDialogTemplate = (dialogConfig, hass) => {
         >
           ${['silent', 'standard', 'sport', 'ludicrous'].map(profile => html`
             <mwc-list-item .value=${profile}>
-              ${profile.charAt(0).toUpperCase() + profile.slice(1)}
+              ${localize.localize(`ui.card.printwatch.speed_profiles.${profile}`)}
             </mwc-list-item>
           `)}
         </ha-select>

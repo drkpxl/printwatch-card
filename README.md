@@ -1,21 +1,20 @@
 # PrintWatch Card
+> A feature-rich Home Assistant card for monitoring and controlling your P1S 3D printer. Get real-time updates on print progress, temperatures, material status, and more with a sleek, user-friendly interface.
 
-A feature-rich Home Assistant card for monitoring and controlling your P1S 3D printer. Get real-time updates on print progress, temperatures, material status, and more with a sleek, user-friendly interface.
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Latest Release](https://img.shields.io/github/v/release/drkpxl/printwatch-card?label=Latest%20Release)](https://github.com/drkpxl/printwatch-card/releases/latest)
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/default)
+[![HACS Validate](https://github.com/drkpxl/printwatch-card/actions/workflows/validate.yaml/badge.svg?branch=main)](https://github.com/drkpxl/printwatch-card/actions/workflows/validate.yaml)
+[![Stars](https://img.shields.io/github/stars/drkpxl/printwatch-card?style=flat)](https://github.com/drkpxl/printwatch-card/stargazers)
+[![Forks](https://img.shields.io/github/forks/drkpxl/printwatch-card?style=flat)](https://github.com/drkpxl/printwatch-card/forks)
 
-### Light Mode 
-![PrintWatch Card Screenshot](assets/light-mode-min.png)
-
-### Dark Mode
-![PrintWatch Dark Mode](assets/dark-mode-min.png)  
-
-### German Example
-![PrintWatch Nord](assets/german.png)
 
 ## Features
-
-- 🎥 Live camera feed with configurable refresh rate
+- 🎥 Live camera feed
+  - Uses native HA streaming for `camera.*` entities (e.g. Generic Camera)
+  - Uses configurable refresh rate for `image.*` entities
 - 📊 Print progress tracking with layer count and estimated completion time
-- 🎨 AMS/Material status visualization including current filament
+- 🎨 AMS/Material status visualization including current filament and temperature & humidity monitoring
 - 💡 Quick controls for chamber light and auxiliary fan
 - ⏯️ Print control buttons (pause/resume/stop) with [confirmation dialogs](assets/pause.png)
 - 🎛️ Speed profile monitoring and control
@@ -24,22 +23,28 @@ A feature-rich Home Assistant card for monitoring and controlling your P1S 3D pr
 - 🌡️ Real-time temperature monitoring and control for bed and nozzle
 - 📷 G-Code preview image (requires HA Bambu Lab plugin update)
 - 🏷️ Display print weight and length details
--🌍 Localization support (initial translations in German, more contributions welcome!)
-pa
-## Prerequisites
+- 🌍 Localization support:
+  - 🇺🇸 English
+  - 🇷🇺 Russian
+  - 🇩🇪 Germany
+  - 🇩🇰 Dansk
 
+## Screenshots
+### Light Mode 
+![PrintWatch Card Screenshot](assets/light-mode.png)
+
+### Dark Mode
+![PrintWatch Dark Mode](assets/dark-mode.png)  
+
+## Prerequisites
 - Home Assistant
 - P1S Printer integration configured in Home Assistant using [ha-bambulab]((https://github.com/greghesp/ha-bambulab)) plugin
 - Required entities set up (see Configuration section)
-- Image sensor toggle turned on
-
-![Image Screenshot](assets/image-toggle.png)
-
+- For streaming: the built-in Home Assistant `stream` integration must be enabled
 
 ## Installation
 
 ### HACS (Recommended) - Awaiting approval from HACS, follow manual
-
 1. Open HACS in Home Assistant
 2. Click on "Frontend" section
 3. Click the "+ Explore & Download Repositories" button
@@ -48,7 +53,6 @@ pa
 6. Restart Home Assistant
 
 ### Manual Installation
-
 1. Navigate to HACS
 2. Tap 3 buttons in top right and select custom repositories
 3. Paste `https://github.com/drkpxl/printwatch-card` and select `dashboard`
@@ -59,52 +63,64 @@ pa
 8. Clear Browser cache if using previous version
 
 ## Configuration
-
 Add the card to your dashboard with this basic configuration:
 
 
 ## Configuration
-
-Add the card to your dashboard with this basic configuration:
+Add the card to your dashboard with this configuration:
 
 ```yaml
 type: custom:printwatch-card
-printer_name: P1S
-camera_refresh_rate: 1000  # Refresh rate in milliseconds (1 second)
-print_status_entity: sensor.p1s_print_status
-current_stage_entity: sensor.p1s_current_stage
-task_name_entity: sensor.p1s_task_name
-progress_entity: sensor.p1s_print_progress
-current_layer_entity: sensor.p1s_current_layer
-total_layers_entity: sensor.p1s_total_layer_count
-remaining_time_entity: sensor.p1s_remaining_time
-bed_temp_entity: sensor.p1s_bed_temperature
-nozzle_temp_entity: sensor.p1s_nozzle_temperature
-bed_target_temp_entity: number.p1s_bed_target_temperature
-nozzle_target_temp_entity: number.p1s_nozzle_target_temperature
-speed_profile_entity: select.p1s_printing_speed
-ams_slot1_entity: sensor.p1s_ams_tray_1
-ams_slot2_entity: sensor.p1s_ams_tray_2
-ams_slot3_entity: sensor.p1s_ams_tray_3
-ams_slot4_entity: sensor.p1s_ams_tray_4
-ams_slot5_entity: sensor.p1s_ams_tray_5
-...
-camera_entity: image.p1s_camera
-cover_image_entity: image.p1s_cover_image
-pause_button_entity: button.p1s_pause_printing
-resume_button_entity: button.p1s_resume_printing
-stop_button_entity: button.p1s_stop_printing
-chamber_light_entity: light.p1s_chamber_light
-aux_fan_entity: fan.p1s_aux_fan
-print_weight_entity: sensor.p1s_print_weight
-print_length_entity: sensor.p1s_print_length
+title: BambuLab A1
+online: binary_sensor.a1_online
+status: sensor.a1_print_status
+stage: sensor.a1_current_stage
+progress: sensor.a1_print_progress
+remaining_time: sensor.a1_remaining_time
+speed_profile: select.a1_printing_speed
+control:
+    fan: fan.a1_cooling_fan
+    pause_button: button.a1_pause_printing
+    resume_button: button.a1_resume_printing
+    stop_button: button.a1_stop_printing
+    chamber_light: switch.bedroom_top
+camera:
+    refresh_rate: 1000
+    entity: image.a1_camera
+layers:
+    current_layer: sensor.a1_current_layer
+    total_layers: sensor.a1_total_layer_count
+temperature:
+    bed: sensor.a1_bed_temperature
+    nozzle: sensor.a1_nozzle_temperature
+    bed_number: number.a1_bed_target_temperature
+    nozzle_number: number.a1_nozzle_target_temperature
+model:
+    name: sensor.a1_task_name
+    preview: image.a1_cover_image
+    weight: sensor.a1_print_weight
+    length: sensor.a1_print_length
+ams: 
+    temperature: sensor.a1_ams_temperature
+    humidity: sensor.a1_ams_humidity
+ams_slots:
+    - sensor.a1_externalspool_external_spool
+    - sensor.a1_externalspool_external_spool
+```
+
+A block for hiding card elements is also supported (not available in the visual editor):
+> By default, all blocks are displayed. Value: `True`
+```yaml
+show:
+    title: false
+    camera: false
+    control: false
+    ams_slots: false
 ```
 
 
 ## Troubleshooting
-
 ### Common Issues
-
 1. **Card not appearing**
    - Check that all required entities exist and are correctly named
    - Verify resources are properly loaded in HA
@@ -112,9 +128,7 @@ print_length_entity: sensor.p1s_print_length
 2. **Camera feed not updating**
    - Ensure camera entity is properly configured
    - Check that image updates are enabled in HA
-   - You must toggle on "use image sensor camera" in the ha-bambulab plugin
-
-![Image Screenshot](assets/image-toggle.png)
+   - Check that the `online` field in the card is filled in
 
 3. **Controls not working**
    - Verify that your user has proper permissions for the entities
@@ -128,22 +142,18 @@ print_length_entity: sensor.p1s_print_length
 
 
 ## Contributing
-
 Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## Support
-
 If you're having issues, please:
 1. Check the Troubleshooting section above
-2. Search existing [GitHub issues](https://github.com/yourusername/printwatch-card/issues)
+2. Search existing [GitHub issues](https://github.com/drkpxl/printwatch-card/issues)
 3. Create a new issue if your problem isn't already reported
 
 ## License
-
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
-
 - [Greg Hesp](https://github.com/greghesp/ha-bambulab) maker of [ha-bambulab]((https://github.com/greghesp/ha-bambulab)) without this plugin wouldn't work
 - Thanks to all P1S users who provided feedback and testing
 - Inspired by the great Home Assistant community

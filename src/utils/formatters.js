@@ -1,3 +1,5 @@
+import { localize } from './localize';
+
 /**
  * Format remaining time duration into human readable format
  * @param {number} minutes - Duration in minutes
@@ -7,20 +9,20 @@
 export const formatDuration = (minutes, options = {}) => {
   const {
     showComplete = true,
-    completeText = 'Complete'
+    completeText = localize.localize(`ui.card.printwatch.time.complete`)
   } = options;
 
   if (!minutes || minutes <= 0) {
-    return showComplete ? completeText : '0m';
+    return showComplete ? completeText : `0${localize.localize(`ui.card.printwatch.time.minutes`)}`;
   }
 
   const hours = Math.floor(minutes / 60);
   const mins = Math.floor(minutes % 60);
 
   if (hours > 0) {
-    return `${hours}h ${mins}m`;
+    return `${hours}${localize.localize(`ui.card.printwatch.time.hours`)} ${mins}${localize.localize(`ui.card.printwatch.time.minutes`)}`;
   }
-  return `${mins}m`;
+  return `${mins}${localize.localize(`ui.card.printwatch.time.minutes`)}`;
 };
 
 /**

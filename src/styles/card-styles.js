@@ -10,6 +10,7 @@ export const cardStyles = css`
     overflow: hidden;
     background: var(--secondary-background-color);
     align-self: stretch;
+    cursor: pointer;
   }
 
   .preview-image img {
@@ -73,7 +74,6 @@ export const cardStyles = css`
     color: var(--state-active-color);
     font-size: 16px;
     font-weight: 500;
-    text-transform: capitalize;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -122,10 +122,10 @@ export const cardStyles = css`
   /* Camera Feed */
   .camera-feed {
     width: 100%;
-    aspect-ratio: 16 / 9;
     border-radius: 8px;
     margin-bottom: 16px;
     position: relative;
+    cursor: pointer;
     background: var(--secondary-background-color);
     overflow: hidden;
   }
@@ -153,7 +153,6 @@ export const cardStyles = css`
     border-radius: 8px;
     font-size: 16px;
     background-color: color-mix(in srgb, var(--card-background-color) 80%, transparent);
-    text-transform: capitalize;
   }
 
   /* Print Status */
@@ -233,7 +232,7 @@ export const cardStyles = css`
   }
 
   /* Temperature Display */
-    .temperatures {
+  .temperatures {
     display: flex;
     justify-content: space-around;
     width: 100%;
@@ -365,5 +364,27 @@ export const cardStyles = css`
     font-size: 12px;
     color: var(--primary-text-color);
     text-align: center;
+  }
+
+  .materials-specs {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    position: relative;
+    margin-bottom: 12px;
+  }
+
+  .materials-specs > .specs-item {
+    text-align: center;
+    color: var(--primary-text-color);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .materials-specs > .specs-item .value {
+    font-size: 20px;
+    font-weight: 500;
   }
 `;

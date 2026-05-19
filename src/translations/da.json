@@ -1,0 +1,145 @@
+{
+  "entity": {
+    "sensor": {
+      "state": {
+        "idle": "Inaktiv",
+        "printing": "Udskriver",
+        "prepare": "Forbereder",
+        "paused": "Pauset",
+        "complete": "Fuldført",
+        "offline": "Offline",
+        "failed": "Mislykket",
+        "unknown": "Ukendt",
+        "running": "Kører",
+        "finish": "Afsluttet",
+        "filament_loading": "Filament indlæses",
+        "homing_toolhead": "Hjemføring af værktøjshoved",
+        "heatbed_preheating": "Forvarmning af varmeplade",
+        "calibrating_extrusion": "Kalibrering af ekstrusion",
+        "sweeping_xy_mech_mode": "Kalibrering af XY-akser",
+        "cleaning_nozzle_tip": "Rengøring af dysen",
+        "auto_bed_leveling": "Tabelkalibrering"
+      }
+    }
+  },
+  "ui": {
+    "card": {
+      "printwatch": {
+        "not_printing": "Udskriver ikke i øjeblikket",
+        "last_print": "Sidste udskrift: {name}",
+        "printer_offline": "Printer offline",
+        "camera_unavailable": "Kamera ikke tilgængeligt",
+        "time": {
+          "complete": "Fuldført",
+          "left": "Tilbage",
+          "hours": "t",
+          "minutes": "m"
+        },
+        "print": {
+          "layer": "Lag",
+          "progress": "Fremskridt",
+          "weight": "Vægt",
+          "length": "Længde"
+        },
+        "temperatures": {
+          "bed": "Printplade",
+          "nozzle": "Dyse",
+          "speed": "Hastighed",
+          "bed_target": "Indstil pladetemperatur",
+          "nozzle_target": "Indstil dysetemperatur",
+          "speed_profile": "Indstil printhastighed",
+          "range": "Område: {min}°C - {max}°C"
+        },
+        "controls": {
+          "pause": "Pause",
+          "resume": "Genoptag",
+          "stop": "Stop",
+          "cancel": "Annuller",
+          "save": "Gem"
+        },
+        "speed_profiles": {
+          "silent": "Støjsvag",
+          "standard": "Standard",
+          "sport": "Sport",
+          "ludicrous": "Ekstrem",
+          "unavailable": "Ikke tilgængelig"
+        },
+        "dialogs": {
+          "pause": {
+            "title": "Bekræft pause",
+            "message": "Er du sikker på, at du vil pause udskriften? Dette kan påvirke kvaliteten.",
+            "confirm": "Bekræft"
+          },
+          "stop": {
+            "title": "Bekræft stop",
+            "message": "Er du sikker på, at du vil stoppe udskriften? Denne handling kan ikke fortrydes.",
+            "confirm": "Stop udskrift"
+          }
+        },
+        "materials": {
+          "empty": "Tom",
+          "unknown": "Ukendt",
+          "external_spool": "Ekstern spole",
+          "temperature": "Temperatur",
+          "humidity": "Feuchtigkeit"
+        }
+      },
+      "printwatch_editor": {
+        "general": {
+          "label": "Generelle indstillinger",
+          "title": "Titel",
+          "status": "Printerstatus",
+          "stage": "Udskriftsfase",
+          "progress": "Udskriftsfremskridt",
+          "remaining_time": "Resterende tid",
+          "speed_profile": "Udskrivningshastighedsprofil"
+        },
+        "camera": {
+          "label": "Kameraindstillinger",
+          "entity": "Kamera",
+          "refresh_rate": "Opdateringsinterval",
+          "hint": {
+            "entity": "Bruges til live visning fra kameraet",
+            "refresh_rate": "Opdateringsinterval for kamerabilledet i sekunder"
+          }
+        },
+        "control": {
+          "label": "Udskriftskontrol",
+          "resume": "Fortsæt-knap",
+          "pause": "Pause-knap",
+          "stop": "Stop-knap"
+        },
+        "layers": {
+          "label": "Lag",
+          "current_layer": "Aktuelt lag",
+          "total_layers": "Samlet antal lag"
+        },
+        "model": {
+          "label": "Model",
+          "name": "Navn",
+          "preview": "Forhåndsvisning",
+          "length": "Længde",
+          "weight": "Vægt"
+        },
+        "temperature": {
+          "label": "Temperatur",
+          "bed": "Printplade",
+          "bed_number": "Styring af printplade",
+          "nozzle": "Dyse",
+          "nozzle_number": "Styring af dyse"
+        },
+        "filament": {
+          "label": "Filament",
+          "spools": "Spoler",
+          "temperature": "Температура AMS",
+          "humidity": "Влажность AMS"
+        },
+        "additional": {
+          "label": "Yderligere",
+          "chamber_light": "Kammerlys",
+          "fan": "Køleventilator"
+        }
+      }
+    }
+  }
+}

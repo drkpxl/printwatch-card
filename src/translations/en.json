@@ -4,12 +4,21 @@
       "state": {
         "idle": "Idle",
         "printing": "Printing",
+        "prepare": "Preparing",
         "paused": "Paused",
         "complete": "Complete",
         "offline": "Offline",
+        "failed": "Failed",
         "unknown": "Unknown",
         "running": "Running",
-        "finish": "Finished"
+        "finish": "Finished",
+        "filament_loading": "Filament loading",
+        "homing_toolhead": "Homing toolhead",
+        "heatbed_preheating": "Heatbed Preheating",
+        "calibrating_extrusion": "Calibrating extrusion",
+        "sweeping_xy_mech_mode": "Calibration of the XY axes",
+        "cleaning_nozzle_tip": "Cleaning the nozzle",
+        "auto_bed_leveling": "Table calibration"
       }
     }
   },
@@ -52,7 +61,8 @@
           "silent": "Silent",
           "standard": "Standard",
           "sport": "Sport",
-          "ludicrous": "Ludicrous"
+          "ludicrous": "Ludicrous",
+          "unavailable": "Unavailable"
         },
         "dialogs": {
           "pause": {
@@ -69,7 +79,65 @@
         "materials": {
           "empty": "Empty",
           "unknown": "Unknown",
-          "external_spool": "External Spool"
+          "external_spool": "External Spool",
+          "temperature": "Temperature",
+          "humidity": "Humidity"
+        }
+      },
+      "printwatch_editor": {
+        "general": {
+          "label": "General Settings",
+          "title": "Title",
+          "status": "Printer Status",
+          "stage": "Print Stage",
+          "progress": "Print Progress",
+          "remaining_time": "Remaining Time",
+          "speed_profile": "Print Speed Profile"
+        },
+        "camera": {
+          "label": "Camera Settings",
+          "entity": "Camera",
+          "refresh_rate": "Refresh Interval",
+          "hint": {
+            "entity": "Used for live camera preview",
+            "refresh_rate": "Camera image refresh interval in seconds"
+          }
+        },
+        "control": {
+          "label": "Print Controls",
+          "resume": "Resume Button",
+          "pause": "Pause Button",
+          "stop": "Stop Button"
+        },
+        "layers": {
+          "label": "Layers",
+          "current_layer": "Current Layer",
+          "total_layers": "Total Layers"
+        },
+        "model": {
+          "label": "Model",
+          "name": "Name",
+          "preview": "Preview",
+          "length": "Length",
+          "weight": "Weight"
+        },
+        "temperature": {
+          "label": "Temperature",
+          "bed": "Bed",
+          "bed_number": "Bed Control",
+          "nozzle": "Nozzle",
+          "nozzle_number": "Nozzle Control"
+        },
+        "filament": {
+          "label": "Filament",
+          "spools": "Spools",
+          "temperature": "Temperature AMS",
+          "humidity": "Humidity AMS"
+        },
+        "additional": {
+          "label": "Additional",
+          "chamber_light": "Chamber Light",
+          "fan": "Cooling Fan"
         }
       }
     }

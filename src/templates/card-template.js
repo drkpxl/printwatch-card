@@ -5,12 +5,14 @@ import { cameraFeedTemplate } from './components/camera-feed';
 import { printStatusTemplate } from './components/print-status';
 import { temperatureDisplayTemplate } from './components/temperature-display';
 import { materialSlotsTemplate } from './components/material-slots';
+import { materialSlotsSpecsTemplate } from './components/material-slots-specs';
 import { temperatureDialogTemplate } from './components/temperature-controls';
 import { confirmDialogTemplate } from './components/confirm-dialog';
 
 export const cardTemplate = (context) => {
   const { 
     entities, 
+    show,
     hass, 
     amsSlots, 
     _toggleLight, 
@@ -22,7 +24,8 @@ export const cardTemplate = (context) => {
     confirmDialog,
     setDialogConfig,
     handlePauseDialog,
-    handleStopDialog
+    handleStopDialog,
+    handlePopup
   } = context;
 
   if (!entities || !hass) return html``;
@@ -42,23 +45,28 @@ export const cardTemplate = (context) => {
     currentStage: entities.currentStage,
     entityPicture: hass.states[entities.camera_entity]?.attributes?.entity_picture,
     onError: context.handleImageError,
-    onLoad: context.handleImageLoad
+    onLoad: context.handleImageLoad,
+    hass,
+    cameraEntity: entities.camera_entity,
+    handlePopup
   };
 
   return html`
-    <div class="card">
-      ${headerTemplate(entities, controls)}
-      ${cameraFeedTemplate(cameraProps)}
+    <ha-card class="card">
+      ${headerTemplate(entities, show, controls)}
+      ${show.camera === true ? cameraFeedTemplate(cameraProps) : ''}
       ${printStatusTemplate(entities, {
         hass,
         onPause: handlePauseDialog,
         onStop: handleStopDialog,
-        onImageError: context.handleImageError
+        onImageError: context.handleImageError,
+        handlePopup
       })}
       ${temperatureDisplayTemplate(entities, hass, dialogConfig, setDialogConfig)}
-      ${materialSlotsTemplate(amsSlots)}
+      ${materialSlotsSpecsTemplate(entities, hass)}
+      ${show.ams_slots === true ? materialSlotsTemplate(amsSlots) : ''}
       ${temperatureDialogTemplate(dialogConfig, hass)}
       ${confirmDialogTemplate(confirmDialog)}
-    </div>
+    </ha-card>
   `;
 };

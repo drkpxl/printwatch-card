@@ -119,7 +119,17 @@ export class Localize {
    * @returns {string} Current language code
    */
   get language() {
-    return document.querySelector('home-assistant')?.hass?.language || this._fallbackLang;
+    const hass = document.querySelector('home-assistant')?.hass;
+    if (!hass) return this._fallbackLang;
+
+    // Home Assistant can expose language as `hass.locale.language` or `hass.language`.
+    // Also normalize regional variants like "ru-RU" -> "ru" and ensure we only
+    // return languages for which translations were loaded; otherwise use fallback.
+    const raw = hass.locale?.language || hass.language;
+    if (!raw) return this._fallbackLang;
+
+    const lang = String(raw).split(/[-_]/)[0].toLowerCase();
+    return this._strings.has(lang) ? lang : this._fallbackLang;
   }
 
   /**
@@ -147,7 +157,7 @@ export class Localize {
 
     // Return key if no translation found
     if (translated === undefined) {
-      console.warn(`No translation found for key: ${key}`);
+      console.warn(`[${this.language}] No translation found for key: ${key}`);
       return key;
     }
 
@@ -166,6 +176,16 @@ export class Localize {
   t(key, params = {}) {
     return this.localize(`ui.card.printwatch.${key}`, params);
   }
+
+  /**
+   * Helper method for edit card strings
+   * @param {string} key - Translation key
+   * @param {Object} params - Parameters for translation
+   * @returns {string} Localized string
+   */
+  e(key, params = {}) {
+    return this.localize(`ui.card.printwatch_editor.${key}`, params);
+  }
 }
 
 // Initialize and export singleton
@@ -174,6 +194,8 @@ export const localize = new Localize();
 // Load default translations
 import * as en from '../translations/en.json';
 import * as de from '../translations/de.json';
+import * as ru from '../translations/ru.json';
 
 localize.loadTranslations('en', en.default || en);
 localize.loadTranslations('de', de.default || de);
+localize.loadTranslations('ru', ru.default || ru);
